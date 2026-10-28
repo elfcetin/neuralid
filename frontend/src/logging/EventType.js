@@ -1,0 +1,7 @@
+// LLD: EventType { KEYSTROKE, DELETION, PAUSE, MOUSE_CLICK }
+export const EventType = Object.freeze({
+  KEYSTROKE: 'KEYSTROKE',
+  DELETION: 'DELETION',
+  PAUSE: 'PAUSE',
+  MOUSE_CLICK: 'MOUSE_CLICK',
+});
