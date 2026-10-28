@@ -25,12 +25,16 @@ function App() {
   }
 
   return (
-    <main>
-      <h1>NeuralID</h1>
-      {!consentGiven && <ConsentScreen onAccept={handleAccept} />}
-      {consentGiven && error && <p>Hata: {error}</p>}
-      {consentGiven && !error && !task && <p>Yükleniyor...</p>}
-      {consentGiven && task && <TaskView task={task} />}
+    <main className="page">
+      <header className="site-header">
+        <h1>NeuralID</h1>
+      </header>
+      <div className="card">
+        {!consentGiven && <ConsentScreen onAccept={handleAccept} />}
+        {consentGiven && error && <p className="status status-error" role="alert">Hata: {error}</p>}
+        {consentGiven && !error && !task && <p className="status" role="status">Yükleniyor...</p>}
+        {consentGiven && task && <TaskView task={task} current={1} total={6} />}
+      </div>
     </main>
   );
 }
