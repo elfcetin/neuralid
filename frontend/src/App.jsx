@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { get } from './services/apiClient';
-import { getOrCreateUserId } from './services/userSessionService';
+import { startTask } from './services/userSessionService';
 import ConsentScreen from './ui/ConsentScreen';
 import TaskView from './ui/TaskView';
 
@@ -20,11 +20,10 @@ function App() {
   }, [consentGiven]);
 
   function handleAccept() {
-    const userId = getOrCreateUserId();
-    console.log('Participant:', userId);
-    // TODO: POST /api/v1/sessions/start cevabındaki sessionID ile değiştirilecek
-    setSessionId(crypto.randomUUID());
     setConsentGiven(true);
+    startTask(DEMO_TASK_ID)
+      .then(setSessionId)
+      .catch((err) => setError(err.message));
   }
 
   return (
@@ -35,8 +34,8 @@ function App() {
       <div className="card">
         {!consentGiven && <ConsentScreen onAccept={handleAccept} />}
         {consentGiven && error && <p className="status status-error" role="alert">Hata: {error}</p>}
-        {consentGiven && !error && !task && <p className="status" role="status">Yükleniyor...</p>}
-        {consentGiven && task && <TaskView task={task} sessionId={sessionId} current={1} total={6} />}
+        {consentGiven && !error && (!task || !sessionId) && <p className="status" role="status">Yükleniyor...</p>}
+        {consentGiven && !error && task && sessionId && <TaskView task={task} sessionId={sessionId} current={1} total={6} />}
       </div>
     </main>
   );
