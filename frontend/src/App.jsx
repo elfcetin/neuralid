@@ -10,6 +10,7 @@ function App() {
   const [consentGiven, setConsentGiven] = useState(false);
   const [task, setTask] = useState(null);
   const [error, setError] = useState(null);
+  const [sessionId, setSessionId] = useState(null);
 
   useEffect(() => {
     if (!consentGiven) return;
@@ -21,6 +22,8 @@ function App() {
   function handleAccept() {
     const userId = getOrCreateUserId();
     console.log('Participant:', userId);
+    // TODO: POST /api/v1/sessions/start cevabındaki sessionID ile değiştirilecek
+    setSessionId(crypto.randomUUID());
     setConsentGiven(true);
   }
 
@@ -33,7 +36,7 @@ function App() {
         {!consentGiven && <ConsentScreen onAccept={handleAccept} />}
         {consentGiven && error && <p className="status status-error" role="alert">Hata: {error}</p>}
         {consentGiven && !error && !task && <p className="status" role="status">Yükleniyor...</p>}
-        {consentGiven && task && <TaskView task={task} current={1} total={6} />}
+        {consentGiven && task && <TaskView task={task} sessionId={sessionId} current={1} total={6} />}
       </div>
     </main>
   );
