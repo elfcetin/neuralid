@@ -2,6 +2,7 @@ package neuralid.backend.api;
 
 import neuralid.backend.db.TaskSession;
 import neuralid.backend.service.SessionService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,5 +37,11 @@ public class SessionController {
         return ResponseEntity
                 .created(URI.create("/api/v1/sessions/" + session.getSessionId()))
                 .body(body);
+    }
+
+    @PostMapping("/submit")
+    public ResponseEntity<Void> submitAnswer(@Valid @RequestBody SubmitAnswerRequest request) {
+        sessionService.submitAnswer(request.sessionID(), request.finalAnswer());
+        return ResponseEntity.ok().build();
     }
 }
