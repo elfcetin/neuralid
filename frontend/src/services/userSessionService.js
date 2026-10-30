@@ -22,3 +22,8 @@ export async function startTask(taskId) {
   });
   return sessionID;
 }
+
+// Cevabı gönderir ve oturumu kapatır (doğru/yanlış bilgisi dönmez)
+export async function submitAnswer(sessionId, finalAnswer) {
+  await post('/api/v1/sessions/submit', { sessionID: sessionId, finalAnswer });
+}
