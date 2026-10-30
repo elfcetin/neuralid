@@ -62,12 +62,14 @@ export class Logger {
     this.eventsBuffer.splice(0, batch.length);
   }
 
-  endSession() {
+  // Promise döner: syncData ileride async olacağı için çağıran await edebilsin
+  async endSession() {
     if (!this.sessionId) return;
     clearInterval(this.timer);
     window.removeEventListener('beforeunload', this.handleUnload);
-    this.syncData();
+    const result = this.syncData();
     this.sessionId = null;
     this.lastEventTime = null;
+    return result;
   }
 }

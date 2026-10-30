@@ -56,4 +56,9 @@ public class TaskSession {
     public Boolean getCorrect() { return correct; }
     public OffsetDateTime getStartedAt() { return startedAt; }
     public OffsetDateTime getSubmittedAt() { return submittedAt; }
+
+    public void setStatus(SessionStatus status) { this.status = status; }
+    public void setFinalAnswer(String finalAnswer) { this.finalAnswer = finalAnswer; }
+    public void setCorrect(Boolean correct) { this.correct = correct; }
+    public void setSubmittedAt(OffsetDateTime submittedAt) { this.submittedAt = submittedAt; }
 }
